@@ -1,0 +1,43 @@
+---
+name: App
+
+"on":
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: code
+
+      - uses: actions/checkout@v3
+        with:
+          repository: "https://github.com/huonw/pants.git"
+          ref: "feature/other-remote-caches"
+          path: pants
+
+      - name: Setup | Rust
+        uses: ATiltedTree/setup-rust@v1
+        with:
+          rust-version: stable
+          components: clippy
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Configure sccache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('PANTS_REMOTE_GHA_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('PANTS_REMOTE_GHA_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+      - run: |
+          ./pants_from_sources version
+
+      - run: |
+          ./pants test ::
