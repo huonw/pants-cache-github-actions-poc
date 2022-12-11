@@ -1,0 +1,5 @@
+[GLOBAL]
+pants_version = "2.14.0"
+
+remote_cache_read = true
+remote_cache_write = true
