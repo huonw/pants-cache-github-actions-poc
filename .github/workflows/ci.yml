@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Configure sccache
+      - name: Configure pants env vars
         uses: actions/github-script@v6
         with:
           script: |
@@ -38,6 +38,8 @@ jobs:
 
       - run: |
           ./pants_from_sources version
+        working-directory: code
 
       - run: |
-          ./pants test ::
+          ./pants_from_sources test ::
+        working-directory: code
