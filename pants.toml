@@ -1,5 +1,21 @@
 [GLOBAL]
 pants_version = "2.14.0"
 
+backend_packages = [
+  "pants.backend.python",
+]
+
 remote_cache_read = true
 remote_cache_write = true
+remote_store_address = "grpc://whatever"
+
+[source]
+root_patterns = [
+  "/",
+]
+
+[stats]
+log = true
+
+[anonymous-telemetry]
+enabled = false
