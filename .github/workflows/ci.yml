@@ -29,6 +29,15 @@ jobs:
         with:
           python-version: "3.9"
 
+      - run: |
+          env
+
+        env:
+          CONTEXT_GITHUB: ${{ toJSON(github) }}
+          CONTEXT_ENV: ${{ toJSON(env) }}
+          CONTEXT_RUNNER: ${{ toJSON(runner) }}
+          CONTEXT_SECRETS: ${{ toJSON(secrets) }}
+
       - name: Configure pants env vars
         uses: actions/github-script@v6
         with:
@@ -37,9 +46,9 @@ jobs:
             core.exportVariable('PANTS_REMOTE_GHA_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - run: |
-          ./pants_from_sources -ltrace version
+          MODE=debug ./pants_from_sources -ltrace version
         working-directory: code
 
       - run: |
-          ./pants_from_sources -ltrace test ::
+          MODE=debug ./pants_from_sources -ltrace test ::
         working-directory: code
