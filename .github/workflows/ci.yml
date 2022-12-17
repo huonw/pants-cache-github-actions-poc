@@ -46,9 +46,9 @@ jobs:
             core.exportVariable('PANTS_REMOTE_GHA_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - run: |
-          MODE=debug ./pants_from_sources -ltrace version
+          MODE=debug ./pants_from_sources -ldebug version
         working-directory: code
 
       - run: |
-          MODE=debug ./pants_from_sources -ltrace test ::
+          MODE=debug ./pants_from_sources -ldebug test ::
         working-directory: code
