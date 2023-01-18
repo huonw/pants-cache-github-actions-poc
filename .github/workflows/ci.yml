@@ -51,9 +51,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
-          ./pants_from_sources -ldebug version
+          MODE=debug ./pants_from_sources -ldebug version
         working-directory: code
 
       - run: |
-          ./pants_from_sources -ldebug test ::
+          MODE=debug ./pants_from_sources -ldebug test ::
         working-directory: code
