@@ -7,8 +7,8 @@ backend_packages = [
   "pants.backend.python",
 ]
 
-remote_cache_read = false
-remote_cache_write = false
+remote_cache_read = true
+remote_cache_write = true
 remote_store_address = "grpc://whatever"
 
 [source]
