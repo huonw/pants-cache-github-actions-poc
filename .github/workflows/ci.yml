@@ -15,8 +15,8 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          repository: "huonw/pants"
-          ref: "feature/other-remote-caches"
+          repository: "pantsbuild/pants"
+          #ref: "feature/other-remote-caches"
           path: pants
 
       - name: Setup | Rust
@@ -44,6 +44,11 @@ jobs:
           script: |
             core.exportVariable('PANTS_REMOTE_GHA_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('PANTS_REMOTE_GHA_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+      - name: Cache Rust compilation
+        uses: metalbear-co/sccache-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
           MODE=debug ./pants_from_sources -ldebug version
