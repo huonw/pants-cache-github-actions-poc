@@ -46,7 +46,7 @@ jobs:
             core.exportVariable('PANTS_REMOTE_GHA_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
       - name: Cache Rust compilation
-        uses: metalbear-co/sccache-action@v1
+        uses: metalbear-co/sccache-action@v1.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
