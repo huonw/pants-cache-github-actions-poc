@@ -15,8 +15,8 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          repository: "pantsbuild/pants"
-          #ref: "feature/other-remote-caches"
+          repository: "huonw/pants"
+          ref: "feature/other-remote-caches"
           path: pants
 
       - name: Setup | Rust
