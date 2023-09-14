@@ -25,6 +25,12 @@ jobs:
           rust-version: stable
           components: clippy
 
+      - name: "Install Protoc"
+        uses: "arduino/setup-protoc@9b1ee5b22b0a3f1feb8c2ff99b32c89b3c3191e9"
+        with:
+          version: "23.x"
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
       - uses: actions/setup-python@v4
         with:
           python-version: "3.9"
@@ -53,9 +59,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
-          MODE=debug PANTS_SOURCE=./pants pants -ldebug version
+          MODE=debug PANTS_SOURCE=../pants pants -ldebug version
         working-directory: code
 
       - run: |
-          MODE=debug PANTS_SOURCE=./pants pants -ldebug test ::
+          MODE=debug PANTS_SOURCE=../pants pants -ldebug test ::
         working-directory: code
