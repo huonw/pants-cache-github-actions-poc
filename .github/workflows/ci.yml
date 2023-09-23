@@ -96,8 +96,8 @@ jobs:
 
       - name: create
         run: |
-          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}'
+          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}' -H "Authorization: Bearer $ACTIONS_RUNTIME_TOKEN"
 
       - name: attempt-recreate
         run: |
-          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}'
+          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}' -H "Authorization: Bearer $ACTIONS_RUNTIME_TOKEN"
