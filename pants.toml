@@ -9,7 +9,7 @@ backend_packages = [
 
 remote_cache_read = true
 remote_cache_write = true
-remote_store_address = "experimental:github-actions-cache://path/goes/here"
+remote_store_address = "experimental:github-actions-cache://prefix"
 
 [source]
 root_patterns = [
