@@ -8,5 +8,6 @@ edition = "2021"
 [dependencies]
 bytes = "1.5.0"
 futures = "0.3.28"
-opendal = "0.40.0"
+# opendal = "0.40.0"
+opendal = {git = "https://github.com/huonw/incubator-opendal", branch = "huonw/3162-ghac-partial"}
 tokio = { version = "1", features=["full"] }

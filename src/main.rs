@@ -14,4 +14,6 @@ async fn main() {
   writer.write_all(&[0]).await.unwrap();
   writer.write_all(&[1]).await.unwrap();
   writer.close().await.unwrap();
+
+  println!("{:?}", op.read(&key).await.unwrap());
 }
