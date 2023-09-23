@@ -65,3 +65,12 @@ jobs:
       - run: |
           MODE=debug PANTS_SOURCE=../pants pants -ldebug test ::
         working-directory: code
+
+  local_runner:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: |
+          cargo run
