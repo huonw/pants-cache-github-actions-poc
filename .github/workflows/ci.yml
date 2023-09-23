@@ -81,3 +81,23 @@ jobs:
 
       - run: |
           cargo run
+
+  act_discordance:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Configure env vars
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+            core.exportVariable('KEY', `example-${Math.random().toString()}`);
+
+      - name: create
+        run: |
+          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}'
+
+      - name: attempt-recreate
+        run: |
+          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}'
