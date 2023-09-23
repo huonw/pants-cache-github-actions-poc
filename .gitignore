@@ -2,3 +2,8 @@
 /.pants.*
 /dist/
 /.pids
+
+
+# Added by cargo
+
+/target
