@@ -9,11 +9,8 @@ async fn main() {
   let now = std::time::SystemTime::now().duration_since(std::time::SystemTime::UNIX_EPOCH).unwrap();
 
   let key = format!("key-{}", now.as_secs_f64());
-  let mut writer = op.writer(&key).await.unwrap();
-
-  writer.write_all(&[0]).await.unwrap();
-  writer.write_all(&[1]).await.unwrap();
-  writer.close().await.unwrap();
-
-  println!("{:?}", op.read(&key).await.unwrap());
+  let writer1 = op.writer(&key).await;
+  dbg!(writer1.map(|_| ()));
+  let writer2 = op.writer(&key).await;
+  dbg!(writer2.map(|_| ()));
 }
