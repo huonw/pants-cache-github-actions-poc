@@ -13,4 +13,6 @@ async fn main() {
   dbg!(writer1.map(|_| ()));
   let writer2 = op.writer(&key).await;
   dbg!(writer2.map(|_| ()));
+
+  dbg!(op.read(&key).await);
 }
