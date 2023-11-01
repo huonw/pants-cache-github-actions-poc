@@ -14,6 +14,8 @@ remote_cache_read = true
 remote_cache_write = true
 remote_instance_name = "huge"
 
+remote_store_rpc_concurrency = 1
+
 [source]
 root_patterns = [
   "/",
