@@ -7,6 +7,9 @@ backend_packages = [
   "pants.backend.shell",
 ]
 
+# run more of these low-effort processes at a time even on the two core GHA runners
+process_execution_local_parallelism = 20
+
 remote_cache_read = true
 remote_cache_write = true
 remote_instance_name = "huge"
