@@ -4,12 +4,12 @@ pants_version = "2.19.0.dev4"
 plugins = ["hdrhistogram"]
 
 backend_packages = [
-  "pants.backend.python",
+  "pants.backend.shell",
 ]
 
 remote_cache_read = true
 remote_cache_write = true
-remote_instance_name = "pants-instance"
+remote_instance_name = "huge"
 
 [source]
 root_patterns = [
