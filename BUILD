@@ -8,7 +8,7 @@ for i in range(100):
         done
         sleep 1
         """,
-        tools=["sleep"],
+        tools=["sleep", "mkdir", "seq"],
         output_directories=[f"out-{i}"]
     )
 
