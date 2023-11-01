@@ -1,5 +1,5 @@
 [GLOBAL]
-pants_version = "2.17.0"
+pants_version = "2.19.0.dev4"
 
 plugins = ["hdrhistogram"]
 
@@ -18,9 +18,6 @@ root_patterns = [
 
 [python]
 interpreter_constraints = ["==3.9.*"]
-
-[python-infer]
-use_rust_parser = true
 
 [stats]
 log = true

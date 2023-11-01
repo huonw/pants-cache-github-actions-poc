@@ -10,41 +10,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          path: code
-
-      - uses: actions/checkout@v3
-        with:
-          repository: "pantsbuild/pants"
-          ref: "huonw/11149-ghac"
-          path: pants
-
-      - name: Setup | Rust
-        uses: ATiltedTree/setup-rust@v1
-        with:
-          rust-version: stable
-          components: clippy
-
-      - name: "Install Protoc"
-        uses: "arduino/setup-protoc@9b1ee5b22b0a3f1feb8c2ff99b32c89b3c3191e9"
-        with:
-          version: "23.x"
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
 
       - run: |
-          curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
-          echo $HOME/bin >> $GITHUB_PATH
-          env
-
-        env:
-          CONTEXT_GITHUB: ${{ toJSON(github) }}
-          CONTEXT_ENV: ${{ toJSON(env) }}
-          CONTEXT_RUNNER: ${{ toJSON(runner) }}
-          CONTEXT_SECRETS: ${{ toJSON(secrets) }}
+          ./get-pants.sh
+          echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Configure pants env vars
         uses: actions/github-script@v6
@@ -53,51 +22,4 @@ jobs:
             core.exportVariable('PANTS_REMOTE_STORE_ADDRESS', 'experimental:github-actions-cache+' + (process.env.ACTIONS_CACHE_URL || ''));
             core.exportVariable('PANTS_REMOTE_STORE_HEADERS', `+{'authorization':'Bearer ${process.env.ACTIONS_RUNTIME_TOKEN || ''}'}`);
 
-      - name: Cache Rust compilation
-        uses: metalbear-co/sccache-action@v1.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - run: |
-          MODE=debug PANTS_SOURCE=../pants pants -ldebug version
-        working-directory: code
-
-      - run: |
-          MODE=debug PANTS_SOURCE=../pants pants -ldebug test ::
-        working-directory: code
-
-  local_runner:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Configure pants env vars
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-
-      - run: |
-          cargo run
-
-  act_discordance:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Configure env vars
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-            core.exportVariable('KEY', `example-${Math.random().toString().slice(2)}`);
-
-      - name: create
-        run: |
-          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}' -H "Authorization: Bearer $ACTIONS_RUNTIME_TOKEN" -H 'Content-Type: application/json' -H 'Accept: application/json;api-version=6.0-preview.1'
-
-      - name: attempt-recreate
-        run: |
-          curl -L -i -X POST $ACTIONS_CACHE_URL/_apis/artifactcache/caches --data '{"key": "$KEY", "version": "1"}' -H "Authorization: Bearer $ACTIONS_RUNTIME_TOKEN" -H 'Content-Type: application/json' -H 'Accept: application/json;api-version=6.0-preview.1'
+      - run: pants test
