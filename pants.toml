@@ -1,5 +1,5 @@
 [GLOBAL]
-pants_version = "2.19.0.dev4"
+pants_version = "2.19.0a0"
 
 plugins = ["hdrhistogram"]
 
@@ -14,7 +14,7 @@ remote_cache_read = true
 remote_cache_write = true
 remote_instance_name = "huge"
 
-remote_store_rpc_concurrency = 1
+# remote_store_rpc_concurrency = 1
 
 [source]
 root_patterns = [
